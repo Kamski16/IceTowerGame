@@ -39,6 +39,7 @@ using namespace std;
 		
 
     };
+
     class Points{
         public:
         	void actuallisePoints(double playerHights){
@@ -52,4 +53,5 @@ using namespace std;
         	int points=0;
 
 
-    };
+
+

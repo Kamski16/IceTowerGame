@@ -55,9 +55,4 @@ class gravity{
 		double step=0.2;
 			
 };
-main(){
-	
-	
-	
-	return 0;
-}
+
