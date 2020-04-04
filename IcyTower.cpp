@@ -33,8 +33,4 @@ using namespace std;
 
 
     };
-    class Points{
-        public:
 
-
-    };

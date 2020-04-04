@@ -1,4 +1,4 @@
-﻿#include "Engine.h"
+#include "Engine.h"
 
 
 
@@ -246,7 +246,7 @@ private:
 	HANDLE hConsole = CreateConsoleScreenBuffer(GENERIC_READ | GENERIC_WRITE, 0, NULL, CONSOLE_TEXTMODE_BUFFER, NULL);
 	wchar_t *screen = new wchar_t[sWidth*sHeight];
 
-	
+
 };
 
 
