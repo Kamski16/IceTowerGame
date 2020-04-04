@@ -25,16 +25,31 @@ using namespace std;
             x+=gravity.ChangeX();
             gravity.nextStep();
             y+=gravity.ChangeY();
-            }
-
+			points.actuallisePoints(y);          
+		    }
+		    int getPoints(){
+		    	return points.getPoints();
+			}
+			
 
         private:
             double x,y;
+        	Points points;
 
+		
 
     };
     class Points{
         public:
+        	void actuallisePoints(double playerHights){
+        		points=max(playerHights,points);
+			}
+        	int getPoints(){
+        		return points;
+			}
+        	
+        private:
+        	int points=0;
 
 
     };
