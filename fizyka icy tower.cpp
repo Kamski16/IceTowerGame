@@ -3,9 +3,9 @@
 #include<windows.h>
 using namespace std;
 
-class gravity{
+class Gravity{
 	public:
-		gravity(int boardWidth){
+		Gravity(int boardWidth){
 			this->boardWidth=boardWidth;
 			
 		}
@@ -48,7 +48,7 @@ class gravity{
 		
 		}
 		
-	private;
+	private:
 		double speedX;
 		double speedY;
 		bool jumping=false;

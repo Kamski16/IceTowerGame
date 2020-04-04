@@ -40,18 +40,18 @@ using namespace std;
 
     };
 
-    class Points{
-        public:
-        	void actuallisePoints(double playerHights){
-        		points=max(playerHights,points);
-			}
-        	int getPoints(){
-        		return points;
-			}
-        	
-        private:
-        	int points=0;
+	class Points {
+	public:
+		void actuallisePoints(double playerHights) {
+			points = max(playerHights, points);
+		}
+		int getPoints() {
+			return points;
+		}
 
+	private:
+		int points = 0;
+	}
 
 
 

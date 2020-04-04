@@ -1,5 +1,5 @@
 #pragma once
-
+#define UNICODE
 
 #include <chrono>
 #include <vector>

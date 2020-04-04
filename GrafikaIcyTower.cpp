@@ -1,8 +1,118 @@
 #include "Engine.h"
 
 
+class Gravity {
+public:
+	Gravity(int boardWidth) {
+		this->boardWidth = boardWidth;
+
+	}
+	void startJump() {
+		speedY = -5;
+		jumping = true;
+	}
+
+	bool isJumping() {
+
+		return jumping;
+	}
+	void nextStep() {
+		speedY += step;
+
+	}
+	int getChangeX() {
+
+		return speedX;
+	}
+	int getChangeY() {
+
+		return speedY;
+	}
+	void leftPress(int actPlayerX) {
+		speedX = 1;
+		if (actPlayeX == 0)
+			speedX = 0;
+		if (speedX < 3)
+			speedX += step;
+
+	}
+	void rightPress(int actPlayerX) {
+		speedX = 1;
+		if (actPlayeX == boardWidth)
+			speedX = 0;
+		if (speedX < 3)
+			speedX += step;
 
 
+	}
+
+private:
+	double speedX;
+	double speedY;
+	bool jumping = false;
+	double step = 0.2;
+
+};
+
+class Player : public Gravity {
+public:
+	Player(Gravity gravity) {
+		this.gravity = gravity
+	}
+
+	void playerStep() {
+		if (GetAsyncState(VK_LEFT)) {
+			gravity.leftPress();
+
+		}
+		if (GetAsyncState(VK_RIGHT)) {
+			gravity.rightPress();
+
+		}
+		if (GetAsyncState(VK_SPACE) && gravity.isJumping == false) {
+			gravity.startJump();
+
+		}
+		x += gravity.ChangeX();
+		gravity.nextStep();
+		y += gravity.ChangeY();
+	}
+
+	double getX() {
+		return x;
+	}
+
+	double getY() {
+		return y;
+	}
+
+private:
+	double x, y;
+
+
+};
+
+ 
+class Board
+{
+public:
+
+	Board(Game* game) {
+
+	}
+	
+
+
+	 getPlayerX() {
+		
+	 }
+
+
+
+private:
+	Gravity gravity(100);
+	Player player(gravity);
+};
 
 
 
@@ -36,20 +146,23 @@ public:
 		for (int i = 0; i < 16; i++)
 			storag[i] = new char[16];
 
+		
+
+
 	}
 
 	void Refresh() {
 		
-			
+		
 		
 			
 
-			DrawSprite(5, 5, Player);
+			DrawSprite(5, 5, Player_Sprite);
 			//DrawCircle(15, 15, 5, PIXEL_SOLID, FG_RED);
 			//Display The Frame ->
 			wchar_t s[256];
 			swprintf(s, 256, L"%s", m_sAppName.c_str());
-			SetConsoleTitle(s);
+			SetConsoleTitleW(s);
 			WriteConsoleOutput(hConsole, m_bufScreen, { (short)sWidth, (short)sHeight }, { 0,0 }, &m_rectWindow);
 		
 
@@ -217,7 +330,7 @@ public:
 		Sleep(50);
 		wchar_t s[256];
 		swprintf(s, 256, L"%s - %d", m_sAppName.c_str(),actualc);
-		SetConsoleTitle(s);
+		SetConsoleTitleW(s);
 		WriteConsoleOutput(hConsole, m_bufScreen, { (short)sWidth, (short)sHeight }, { 0,0 }, &m_rectWindow);
 
 		if (GetAsyncKeyState(VK_ESCAPE) & 0x0001) {
@@ -236,7 +349,10 @@ public:
 
 
 private:
-	Sprite* Player = new Sprite("Player.txt");;
+
+	
+
+	Sprite* Player_Sprite = new Sprite("Player.txt");;
 	int x = 0, y = 0, actualc = 2;
 	char** storag;
 	float fElapsedTime = 60.f;
@@ -250,6 +366,9 @@ private:
 };
 
 
+
+
+
 int main() {
 
 		//Basic Declarations ->	
@@ -260,8 +379,8 @@ int main() {
 		
 		
 		while (1) {
-			demo.Refresh();
-			//demo.GraphicMaker();
+			//demo.Refresh();
+			demo.GraphicMaker();
 		}
 }
 
