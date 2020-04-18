@@ -3,10 +3,7 @@
 
 class Gravity {
 public:
-	Gravity(int boardWidth) {
-		this->boardWidth = boardWidth;
 
-	}
 	void startJump() {
 		speedY = -5;
 		jumping = true;
@@ -20,17 +17,17 @@ public:
 		speedY += step;
 
 	}
-	int getChangeX() {
+	int ChangeX() {
 
 		return speedX;
 	}
-	int getChangeY() {
+	int ChangeY() {
 
 		return speedY;
 	}
 	void leftPress(int actPlayerX) {
 		speedX = 1;
-		if (actPlayeX == 0)
+		if (actPlayerX == 0)
 			speedX = 0;
 		if (speedX < 3)
 			speedX += step;
@@ -38,7 +35,7 @@ public:
 	}
 	void rightPress(int actPlayerX) {
 		speedX = 1;
-		if (actPlayeX == boardWidth)
+		if (actPlayerX == boardWidth)
 			speedX = 0;
 		if (speedX < 3)
 			speedX += step;
@@ -51,31 +48,52 @@ private:
 	double speedY;
 	bool jumping = false;
 	double step = 0.2;
+	int boardWidth = 200;
 
+};
+class Platform{
+	public:
+		Platform(int x,int y,int width){
+			this->x = x;
+			this->y = y;
+			this->width = width;
+		}
+		int getX(){
+			return x;
+		}
+		int getY(){
+			return y;
+		}
+		int getWidth(){
+			return width;
+		}
+		bool moveDown(int val){
+			y-=val;
+			return y >= 0;
+		}
+	private:
+		int x,y, width;
 };
 
 class Player : public Gravity {
 public:
-	Player(Gravity gravity) {
-		this.gravity = gravity
-	}
 
 	void playerStep() {
-		if (GetAsyncState(VK_LEFT)) {
-			gravity.leftPress();
+		if (GetAsyncKeyState(VK_LEFT)) {
+			leftPress(x);
 
 		}
-		if (GetAsyncState(VK_RIGHT)) {
-			gravity.rightPress();
+		if (GetAsyncKeyState(VK_RIGHT)) {
+			rightPress(x);
 
 		}
-		if (GetAsyncState(VK_SPACE) && gravity.isJumping == false) {
-			gravity.startJump();
+		if (GetAsyncKeyState(VK_SPACE) && isJumping() == false) {
+			startJump();
 
 		}
-		x += gravity.ChangeX();
-		gravity.nextStep();
-		y += gravity.ChangeY();
+		x += ChangeX();
+		nextStep();
+		y += ChangeY();
 	}
 
 	double getX() {
@@ -93,25 +111,36 @@ private:
 };
 
  
-class Board
-{
+class Board{
 public:
-
-	Board(Game* game) {
-
+	
+	int getPlayerX(){
+		return player.getX();
+	}
+	int getPlayerY(){
+		return player.getY() - totalMovedY;
+	}
+	void init(){
+		for (int i =20; i<150; i+=30){
+			platforms.push_back(Platform(rand()%150,i,50+rand()%50));
+		}
+	}
+	vector<Platform> getPlatforms(){
+		return platforms;
 	}
 	
-
-
-	 getPlayerX() {
-		
-	 }
-
-
+	void moveBoard(int yMove){
+		totalMovedY	+= yMove;
+		for(int i=0; i<platforms.size();i++){
+			if(platforms[i].moveDown(yMove))
+				platforms[i] = Platform(rand()%150,150,50+rand()%50);
+		}
+	}
 
 private:
-	Gravity gravity(100);
-	Player player(gravity);
+	Player player;
+	vector <Platform> platforms;
+	int totalMovedY = 0;
 };
 
 
@@ -372,14 +401,13 @@ private:
 int main() {
 
 		//Basic Declarations ->	
-		
-		Game demo;
-		demo.Start();
-		
+
+		Board board;
+		board.init();
 		
 		
 		while (1) {
-			//demo.Refresh();
+			demo.Refresh();
 			demo.GraphicMaker();
 		}
 }
