@@ -409,6 +409,9 @@ int main() {
 		while (1) {
 			demo.Refresh();
 			demo.GraphicMaker();
+			
+			board.moveBoard(1);
+			sleep(50); //20FPS
 		}
 }
 
